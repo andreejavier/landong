@@ -6,6 +6,7 @@ import Home from './Home';
 import Page1 from './Page1';
 import Page2 from './Page2';
 import Details from './Details';
+import About from './About';
 import './Home.css';
 
 
@@ -24,6 +25,11 @@ const Menu: React.FC = () => {
     {
       name:'Page 2',
       url:'/app/page2',
+      icon:newspaperOutline
+    },
+    {
+      name:'About',
+      url:'/app/about',
       icon:newspaperOutline
     }
   ]
@@ -67,6 +73,7 @@ const Menu: React.FC = () => {
         <Route exact path="/app/page1" component={Page1} />
         <Route exact path="/app/page1/details" component={Details} />
         <Route exact path="/app/page2" component={Page2} />
+        <Route exact path="/app/About" component={About} />
         <Route exact path="/app">
           <Redirect to="/app/home" />
         </Route>
