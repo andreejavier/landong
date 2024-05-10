@@ -38,4 +38,13 @@
     background-color: #ffffff; /* Your active tab background color */
     color: #000000; /* Your active tab text color */
   }
+
+.home-tab{
+    color:white;
+}
+
+.home-white-text{
+    color:rgb(128, 128, 128);
+    font-size: 12.5px;
+}
   

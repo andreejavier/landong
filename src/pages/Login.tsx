@@ -54,7 +54,8 @@ const Login: React.FC = () => {
                 </IonRow>
                 <IonRow >
                   <IonCol >
-                  <IonButton onClick={() => doLogin()} expand="block" color="landong-light text-white" shape="round">Signup</IonButton>
+                  <IonButton onClick={() => doLogin()} expand="block" color="landong-light text-white" shape="round"
+                  ><p className='home-white-text'>Signup</p></IonButton>
                   </IonCol>
             
                 </IonRow>

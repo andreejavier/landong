@@ -35,19 +35,19 @@ const Page1: React.FC = () => {
           <Redirect exact from="/app/home" to="/app/home/stats" />
         </IonRouterOutlet>
 
-        <IonTabBar slot="bottom" color="landong-light">
-          <IonTabButton tab="map" href="/app/home/map">
-            <IonIcon icon={mapSharp} />
+        <IonTabBar slot="bottom" color="landong-secondary">
+          <IonTabButton  className="home-tab" tab="map" href="/app/home/map">
+            <IonIcon  icon={mapSharp} />
             <IonLabel>Map</IonLabel>
           </IonTabButton>
 
-          <IonTabButton tab="plant" href="/app/home/plant">
-            <IonIcon icon={leaf} />
+          <IonTabButton  className="home-tab" tab="plant" href="/app/home/plant">
+            <IonIcon  icon={leaf} />
             <IonLabel>Plant Now</IonLabel>
           </IonTabButton>
 
-          <IonTabButton tab="stats" href="/app/home/stats">
-            <IonIcon icon={statsChartOutline} />
+          <IonTabButton  className="home-tab" tab="stats" href="/app/home/stats">
+            <IonIcon className="home-tab-icon" icon={statsChartOutline} />
             <IonLabel>Stats</IonLabel>
           </IonTabButton>
         </IonTabBar>
