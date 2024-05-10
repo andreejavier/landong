@@ -29,24 +29,24 @@ const Page1: React.FC = () => {
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-          <Route path="/home/map" render={() => <MapPage />} exact={true} />
-          <Route path="/home/plant" render={() => <PlantPage />} exact={true} />
-          <Route path="/home/list" render={() => <StatsPage />} exact={true} />
-          <Redirect exact from="/app/home" to="/home/map" />
+          <Route path="/app/home/map" render={() => <MapPage />} exact={true} />
+          <Route path="/app/home/plant" render={() => <PlantPage />} exact={true} />
+          <Route path="/app/home/stats" render={() => <StatsPage />} exact={true} />
+          <Redirect exact from="/app/home" to="/app/home/stats" />
         </IonRouterOutlet>
 
         <IonTabBar slot="bottom" color="landong-light">
-          <IonTabButton tab="map" href="/home/map">
+          <IonTabButton tab="map" href="/app/home/map">
             <IonIcon icon={mapSharp} />
             <IonLabel>Map</IonLabel>
           </IonTabButton>
 
-          <IonTabButton tab="plant" href="/home/plant">
+          <IonTabButton tab="plant" href="/app/home/plant">
             <IonIcon icon={leaf} />
             <IonLabel>Plant Now</IonLabel>
           </IonTabButton>
 
-          <IonTabButton tab="stats" href="/home/list">
+          <IonTabButton tab="stats" href="/app/home/stats">
             <IonIcon icon={statsChartOutline} />
             <IonLabel>Stats</IonLabel>
           </IonTabButton>

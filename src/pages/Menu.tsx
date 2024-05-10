@@ -48,7 +48,7 @@ const Menu: React.FC = () => {
             </IonMenuToggle>
           ))}
 
-          <IonButton routerLink="/" routerDirection="back" expand="full"> 
+          <IonButton routerLink="/" routerDirection="back" expand="full" color="landong-secondary text-white" shape="round"> 
             Logout  
           </IonButton>
         </IonContent>
