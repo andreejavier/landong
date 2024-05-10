@@ -1,9 +1,8 @@
 import React from 'react';
 import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/react';
 
-const LibraryPage = () => (
+const RadioPage = () => (
   <>
-   
     <IonContent>
       <div
         style={{
@@ -13,10 +12,10 @@ const LibraryPage = () => (
           height: '100%',
         }}
       >
-        Library content
+        Plant
       </div>
     </IonContent>
   </>
 );
 
-export default LibraryPage;
+export default RadioPage;

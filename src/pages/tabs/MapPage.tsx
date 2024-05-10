@@ -3,11 +3,6 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/react';
 
 const HomePage = () => (
   <>
-    <IonHeader>
-      <IonToolbar>
-        <IonTitle>Listen now</IonTitle>
-      </IonToolbar>
-    </IonHeader>
     <IonContent>
       <div
         style={{
@@ -17,7 +12,7 @@ const HomePage = () => (
           height: '100%',
         }}
       >
-        Listen now content
+        Map
       </div>
     </IonContent>
   </>

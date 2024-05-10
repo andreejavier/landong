@@ -1,78 +1,61 @@
 import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonLabel, IonMenuButton, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, IonTitle, IonToolbar } from '@ionic/react';
 import './Home.css';
 import { IonReactRouter } from '@ionic/react-router';
-import { playCircle, radio, library, search } from 'ionicons/icons';
+import { mapOutline, leaf, statsChartOutline,} from 'ionicons/icons';
 import { Redirect, Route } from 'react-router';
 
-
-
-import HomePage from './tabs/MapPage';
-import RadioPage from './tabs/RadioPage';
-import LibraryPage from './tabs/LibraryPage';
+import MapPage from './tabs/MapPage';
+import PlantPage from './tabs/PlantPage';
+import StatsPage from './tabs/StatsPage';
 
 const Page1: React.FC = () => {
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot='start'>
-            <IonMenuButton></IonMenuButton>
+  <IonHeader>
+    <IonToolbar>
+      <IonButtons slot='start'>
+        <IonMenuButton></IonMenuButton>
+      </IonButtons>
+      <IonTitle></IonTitle>
+    </IonToolbar>
+  </IonHeader>
+  <IonContent className="ion-padding">
+    <IonHeader collapse="condense">
+      <IonToolbar>
+        <IonTitle size="large">Home</IonTitle>
+      </IonToolbar>
+    </IonHeader>
 
-          </IonButtons>
-          <IonTitle>Home</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent className="ion-padding">
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Home</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-
-        <IonButton routerLink="/app/page1/details" expand="full">
-          Details
-        </IonButton>
-    
-        <IonReactRouter>
+    <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-          <Redirect exact path="/" to="/home" />
-          {/*
-          Use the render method to reduce the number of renders your component will have due to a route change.
-
-          Use the component prop when your component depends on the RouterComponentProps passed in automatically.
-        */}
-          <Route path="/home" render={() => <HomePage />} exact={true} />
-          <Route path="/radio" render={() => <RadioPage />} exact={true} />
-          <Route path="/library" render={() => <LibraryPage />} exact={true} />
-
+          <Route path="/home/map" render={() => <MapPage />} exact={true} />
+          <Route path="/home/plant" render={() => <PlantPage />} exact={true} />
+          <Route path="/home/list" render={() => <StatsPage />} exact={true} />
+          <Redirect exact from="/app/home" to="/home/map" />
         </IonRouterOutlet>
 
         <IonTabBar slot="bottom">
-          <IonTabButton tab="home" href="/home">
-            <IonIcon icon={playCircle} />
-            <IonLabel>Listen now</IonLabel>
+          <IonTabButton tab="map" href="/home/map">
+            <IonIcon icon={mapOutline} />
+            <IonLabel>Map</IonLabel>
           </IonTabButton>
 
-          <IonTabButton tab="radio" href="/radio">
-            <IonIcon icon={radio} />
-            <IonLabel>Radio</IonLabel>
+          <IonTabButton tab="plant" href="/home/plant">
+            <IonIcon icon={leaf} />
+            <IonLabel>Plant Now</IonLabel>
           </IonTabButton>
 
-          <IonTabButton tab="library" href="/library">
-            <IonIcon icon={library} />
-            <IonLabel>Library</IonLabel>
-          </IonTabButton>
-
-          <IonTabButton tab="search" href="/search">
-            <IonIcon icon={search} />
-            <IonLabel>Search</IonLabel>
+          <IonTabButton tab="stats" href="/home/list">
+            <IonIcon icon={statsChartOutline} />
+            <IonLabel>Stats</IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>
     </IonReactRouter>
-      </IonContent>
-    </IonPage>
+  </IonContent>
+</IonPage>
+
   );
 };
 
