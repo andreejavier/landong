@@ -32,3 +32,10 @@
 .login-card-title{
     text-align: center;
 }
+
+/* Example CSS */
+.selected-tab {
+    background-color: #ffffff; /* Your active tab background color */
+    color: #000000; /* Your active tab text color */
+  }
+  

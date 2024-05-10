@@ -1,7 +1,7 @@
 import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonLabel, IonMenuButton, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, IonTitle, IonToolbar } from '@ionic/react';
 import './Home.css';
 import { IonReactRouter } from '@ionic/react-router';
-import { mapOutline, leaf, statsChartOutline,} from 'ionicons/icons';
+import { mapSharp, leaf, statsChartOutline,} from 'ionicons/icons';
 import { Redirect, Route } from 'react-router';
 
 import MapPage from './tabs/MapPage';
@@ -35,9 +35,9 @@ const Page1: React.FC = () => {
           <Redirect exact from="/app/home" to="/home/map" />
         </IonRouterOutlet>
 
-        <IonTabBar slot="bottom">
+        <IonTabBar slot="bottom" color="landong-light">
           <IonTabButton tab="map" href="/home/map">
-            <IonIcon icon={mapOutline} />
+            <IonIcon icon={mapSharp} />
             <IonLabel>Map</IonLabel>
           </IonTabButton>
 
