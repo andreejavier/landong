@@ -9,9 +9,11 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
   IonCol,
   IonGrid,
   IonInput,
-  IonRow
+  IonRow,
+  IonText
 } from '@ionic/react';
 import './Home.css';
+import './Theme.css';
 
 const Login: React.FC = () => {
   const navigation = useIonRouter();
@@ -44,13 +46,16 @@ const Login: React.FC = () => {
 
                 <IonRow >
                   <IonCol >
-                  <IonButton onClick={() => doLogin()} expand="block">Login</IonButton>
+                  <IonButton onClick={() => doLogin()} expand="block" color="landong-secondary text-white" shape="round">  <IonText color="light">
+                  Login
+                </IonText></IonButton>
                   </IonCol>
             
                 </IonRow>
                 <IonRow >
                   <IonCol >
-                  <IonButton onClick={() => doLogin()} expand="block" color="secondary">Signup</IonButton>
+                  <IonButton onClick={() => doLogin()} expand="block" color="landong-light text-white" shape="round"
+                  ><p className='home-white-text'>Signup</p></IonButton>
                   </IonCol>
             
                 </IonRow>

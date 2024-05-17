@@ -1,0 +1,31 @@
+.stats-trees-planted-header {
+    color: white;
+    margin-top: 1.5em;
+
+  }
+
+.stats-trees-planted {
+    color: white;
+    font-size: 4em;
+    margin-left: 3em;
+    margin-top: 0.28em;
+}
+
+.stats-trees-planted-container{
+    display: flex;
+    flex: 1;
+    padding: 10px;
+    margin: 5px;
+}
+
+.stats-box2{
+    display: flex;
+    flex: 1;
+    padding: 10px;
+    margin: 5px;
+}
+
+.stats-box2-sub{
+    border: 1px solid #17966f;
+    color: #17966f;
+}
