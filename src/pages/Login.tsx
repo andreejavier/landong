@@ -46,7 +46,7 @@ const Login: React.FC = () => {
 
                 <IonRow >
                   <IonCol >
-                  <IonButton onClick={() => doLogin()} expand="block" color="landong-secondary text-white" shape="round">  <IonText color="light">
+                  <IonButton onClick={() => doLogin()} expand="block" color="landong-secondary" shape="round">  <IonText  className="login-log-btn-txt" >
                   Login
                 </IonText></IonButton>
                   </IonCol>
@@ -54,8 +54,8 @@ const Login: React.FC = () => {
                 </IonRow>
                 <IonRow >
                   <IonCol >
-                  <IonButton onClick={() => doLogin()} expand="block" color="landong-light text-white" shape="round"
-                  ><p className='home-white-text'>Signup</p></IonButton>
+                  <IonButton onClick={() => doLogin()} expand="block" color="secondary" shape="round">
+                    <p className="login-log-btn-txt">Signup</p></IonButton>
                   </IonCol>
             
                 </IonRow>
