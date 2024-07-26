@@ -6,7 +6,7 @@ import Home from './Home';
 import Page1 from './Page1';
 import Page2 from './Page2';
 import Details from './Details';
-import About from './About';
+import About from './About/About';
 import './Home.css';
 
 
