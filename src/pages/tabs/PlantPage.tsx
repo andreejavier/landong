@@ -1,34 +1,75 @@
 import React, { useState } from 'react';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonInput, IonItem, IonLabel } from '@ionic/react';
+import {
+  IonContent,
+  IonButton,
+  IonInput,
+  IonImg,
+  IonCard,
+  IonCardContent,
+  IonModal,
+  IonToast,
+} from '@ionic/react';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera'; 
 import EXIF from 'exif-js';
+import { useHistory } from 'react-router-dom'; // Import useHistory for navigation
 
-const RadioPage = () => {
-  const [imageSrc, setImageSrc] = useState(null);
-  const [latitude, setLatitude] = useState('');
-  const [longitude, setLongitude] = useState('');
-  const [datetime, setDatetime] = useState('');
+const RadioPage: React.FC = () => {
+  const [lat, setLat] = useState<string>('');
+  const [lon, setLon] = useState<string>('');
+  const [dateTime, setDateTime] = useState<string>('');
+  const [imagePreview, setImagePreview] = useState<string>(
+    'https://www.freeiconspng.com/uploads/no-image-icon-6.png'
+  );
+  const [locationInfo, setLocationInfo] = useState<any>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const history = useHistory(); // Create history instance for navigation
 
-  const handleImageChange = (event) => {
+  const clearInputs = () => {
+    setLat('');
+    setLon('');
+    setDateTime('');
+    setLocationInfo(null);
+    setImagePreview('https://www.freeiconspng.com/uploads/no-image-icon-6.png');
+  };
+
+  const handleImageInput = (event: any) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = () => {
-        setImageSrc(reader.result);
-        EXIF.getData(file, function () {
-          const lat = EXIF.getTag(this, 'GPSLatitude');
-          const latRef = EXIF.getTag(this, 'GPSLatitudeRef');
-          const lon = EXIF.getTag(this, 'GPSLongitude');
-          const lonRef = EXIF.getTag(this, 'GPSLongitudeRef');
-          const date = EXIF.getTag(this, 'DateTimeOriginal');
+      reader.onload = (e) => {
+        setImagePreview(e.target?.result as string);
 
-          if (lat && lon) {
-            const latitude = convertDMSToDD(lat, latRef);
-            const longitude = convertDMSToDD(lon, lonRef);
-            setLatitude(latitude);
-            setLongitude(longitude);
+        EXIF.getData(file, () => {
+          const latData = EXIF.getTag(file, 'GPSLatitude');
+          const lonData = EXIF.getTag(file, 'GPSLongitude');
+          const latRef = EXIF.getTag(file, 'GPSLatitudeRef') || 'N';
+          const lonRef = EXIF.getTag(file, 'GPSLongitudeRef') || 'E';
+          const date = EXIF.getTag(file, 'DateTimeOriginal');
+
+          if (latData && lonData) {
+            const toDecimal = (degree: number[], ref: string) => {
+              const decimal =
+                degree[0] + degree[1] / 60 + degree[2] / 3600;
+              return ref === 'S' || ref === 'W' ? -decimal : decimal;
+            };
+
+            const latitude = toDecimal(latData, latRef);
+            const longitude = toDecimal(lonData, lonRef);
+
+            setLat(latitude.toString());
+            setLon(longitude.toString());
+
+            fetchLocationData(latitude, longitude);
+          } else {
+            setLat('No GPS data');
+            setLon('No GPS data');
           }
+
           if (date) {
-            setDatetime(date);
+            setDateTime(date);
+          } else {
+            setDateTime('No date data');
           }
         });
       };
@@ -36,57 +77,147 @@ const RadioPage = () => {
     }
   };
 
-  const convertDMSToDD = (dms, ref) => {
-    const [degrees, minutes, seconds] = dms;
-    let dd = degrees + minutes / 60 + seconds / 3600;
+  const fetchLocationData = (lat: number, lon: number) => {
+    const apiUrl = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`;
 
-    // Apply the reference to adjust the sign
-    if (ref === 'S' || ref === 'W') {
-      dd = -dd;
-    }
-
-     return dd;
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data && data.address) {
+          const locationData = {
+            displayName: data.display_name,
+            address: data.address,
+          };
+          setLocationInfo(locationData);
+        } else {
+          setLocationInfo('Error fetching location data');
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching location data:', error);
+        setLocationInfo('Error fetching location data');
+      });
   };
 
-  const handleClear = () => {
-    setImageSrc(null);
-    setLatitude('');
-    setLongitude('');
-    setDatetime('');
+  // Capture photo
+  const capturePhoto = async () => {
+    const photo = await Camera.getPhoto({
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Camera,
+      quality: 90,
+    });
+
+    if (photo.dataUrl) {
+      setImagePreview(photo.dataUrl);
+    }
+  };
+
+  const submitForm = () => {
+    // Simulate form submission and navigate to MapPage with coordinates
+    setShowToast(true);
+    
+    // After the toast, navigate to MapPage and pass latitude and longitude
+    history.push({
+      pathname: '/map', // Assuming the map page route is '/map'
+      state: { lat, lon }, // Pass lat and lon to the map page
+    });
   };
 
   return (
     <>
       <IonContent>
-        <div style={{ display: 'flex', justifyContent: 'center', padding: '20px' }}>
-          <div>
-            {imageSrc ? (
-              <img src={imageSrc} alt="Preview" style={{ width: '150px', height: '150px', objectFit: 'cover' }} />
-            ) : (
-              <div style={{ width: '150px', height: '150px', backgroundColor: '#ccc' }} />
-            )}
-          </div>
-          <div>
-            <h2>Upload Image</h2>
-            <input type="file" accept="image/*" onChange={handleImageChange} />
-            <IonItem>
-              <IonLabel position="stacked">Latitude</IonLabel>
-              <IonInput value={latitude} readonly />
-            </IonItem>
-            <IonItem>
-              <IonLabel position="stacked">Longitude</IonLabel>
-              <IonInput value={longitude} readonly />
-            </IonItem>
-            <IonItem>
-              <IonLabel position="stacked">Datetime</IonLabel>
-              <IonInput value={datetime} readonly />
-            </IonItem>
-            <div style={{ marginTop: '10px' }}>
-              <IonButton color="primary">Save Data</IonButton>
-              <IonButton color="medium" onClick={handleClear}>Clear</IonButton>
+        <IonCard>
+          <IonCardContent>
+            <div className="row mb-4">
+              <div className="col-md-12">
+                <IonButton onClick={capturePhoto} expand="block" className="mb-3">
+                  Capture Photo
+                </IonButton>
+              </div>
+              <div className="col-md-4">
+                <IonImg className="img-fluid" src={imagePreview} />
+              </div>
+              <div className="col-md-8">
+                <h5>Upload Image</h5>
+                <input
+                  type="file"
+                  onChange={handleImageInput}
+                  className="form-control"
+                />
+                <div className="mt-3">
+                  <IonInput value={lat} readonly placeholder="Latitude" />
+                  <IonInput value={lon} readonly placeholder="Longitude" />
+                  <IonInput
+                    value={dateTime}
+                    readonly
+                    placeholder="Datetime"
+                  />
+                </div>
+
+                {locationInfo && typeof locationInfo !== 'string' && (
+                  <div className="mt-3">
+                    <IonInput
+                      value={locationInfo.displayName}
+                      readonly
+                      placeholder="Location"
+                    />
+                  </div>
+                )}
+                {typeof locationInfo === 'string' && (
+                  <p>{locationInfo}</p>
+                )}
+
+                <IonButton
+                  onClick={() => setModalOpen(true)}
+                  className="mt-3"
+                >
+                  Save Data
+                </IonButton>
+                <IonButton
+                  onClick={clearInputs}
+                  className="mt-3"
+                  color="secondary"
+                >
+                  Clear
+                </IonButton>
+              </div>
             </div>
+          </IonCardContent>
+        </IonCard>
+
+        <IonModal isOpen={modalOpen} onDidDismiss={() => setModalOpen(false)}>
+          <div className="modal-header">
+            <h1>Upload Details?</h1>
+            <IonButton
+              onClick={() => setModalOpen(false)}
+              color="light"
+            >
+              Close
+            </IonButton>
           </div>
-        </div>
+          <div className="modal-body">
+            Are you sure you want to save the data?
+          </div>
+          <div className="modal-footer">
+            <IonButton
+              onClick={() => setModalOpen(false)}
+              color="light"
+            >
+              Close
+            </IonButton>
+            <IonButton onClick={submitForm} color="primary">
+              Save changes
+            </IonButton>
+          </div>
+        </IonModal>
+
+        <IonToast
+          isOpen={showToast}
+          onDidDismiss={() => setShowToast(false)}
+          message="New record added successfully!"
+          duration={2000}
+          color="success"
+        />
       </IonContent>
     </>
   );
