@@ -35,12 +35,15 @@ const RadioPage: React.FC = () => {
 
   const handleImageInput = (event: any) => {
     const file = event.target.files[0];
-    if (file) {
+    
+    // Check if file is a supported image type (JPEG or TIFF)
+    if (file && (file.type === 'image/jpeg' || file.type === 'image/tiff')) {
       const reader = new FileReader();
       reader.onload = (e) => {
         setImagePreview(e.target?.result as string);
 
         EXIF.getData(file, () => {
+          // Check if EXIF data is available
           const latData = EXIF.getTag(file, 'GPSLatitude');
           const lonData = EXIF.getTag(file, 'GPSLongitude');
           const latRef = EXIF.getTag(file, 'GPSLatitudeRef') || 'N';
@@ -60,20 +63,23 @@ const RadioPage: React.FC = () => {
             setLat(latitude.toString());
             setLon(longitude.toString());
 
+            // Fetch address based on latitude and longitude
             fetchLocationData(latitude, longitude);
           } else {
-            setLat('No GPS data');
-            setLon('No GPS data');
+            setLat('No GPS data available');
+            setLon('No GPS data available');
           }
 
           if (date) {
             setDateTime(date);
           } else {
-            setDateTime('No date data');
+            setDateTime('No date available');
           }
         });
       };
       reader.readAsDataURL(file);
+    } else {
+      console.error('Unsupported file type. Only JPEG and TIFF images are supported.');
     }
   };
 
@@ -188,12 +194,6 @@ const RadioPage: React.FC = () => {
         <IonModal isOpen={modalOpen} onDidDismiss={() => setModalOpen(false)}>
           <div className="modal-header">
             <h1>Upload Details?</h1>
-            <IonButton
-              onClick={() => setModalOpen(false)}
-              color="light"
-            >
-              Close
-            </IonButton>
           </div>
           <div className="modal-body">
             Are you sure you want to save the data?
