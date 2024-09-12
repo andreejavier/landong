@@ -8,6 +8,7 @@ export default defineConfig({
     react(),
     legacy()
   ],
+  base:"/landong/",
   test: {
     globals: true,
     environment: 'jsdom',

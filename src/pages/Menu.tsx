@@ -14,22 +14,22 @@ const Menu: React.FC = () => {
   const sidemenuItems = [
     {
       name:'Home',
-      url:'/app/home',
+      url:'/landong/app/home',
       icon:homeOutline
     },
     {
       name:'Page 1',
-      url:'/app/page1',
+      url:'/landong/app/page1',
       icon:homeOutline
     },
     {
       name:'Page 2',
-      url:'/app/page2',
+      url:'/landong/app/page2',
       icon:newspaperOutline
     },
     {
       name:'About',
-      url:'/app/about',
+      url:'/landong/app/about',
       icon:newspaperOutline
     }
   ]
@@ -69,13 +69,13 @@ const Menu: React.FC = () => {
       {/* Routers */}
       <IonRouterOutlet id="main">
         
-        <Route exact path="/app/home" component={Home} />
-        <Route exact path="/app/page1" component={Page1} />
-        <Route exact path="/app/page1/details" component={Details} />
-        <Route exact path="/app/page2" component={Page2} />
-        <Route exact path="/app/About" component={About} />
-        <Route exact path="/app">
-          <Redirect to="/app/home" />
+        <Route exact path="/landong/app/home" component={Home} />
+        <Route exact path="/landong/app/page1" component={Page1} />
+        <Route exact path="/landong/app/page1/details" component={Details} />
+        <Route exact path="/landong/app/page2" component={Page2} />
+        <Route exact path="/landong/app/About" component={About} />
+        <Route exact path="/landong/app">
+          <Redirect to="/landong/app/home" />
         </Route>
 
       </IonRouterOutlet>

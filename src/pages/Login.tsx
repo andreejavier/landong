@@ -19,7 +19,7 @@ const Login: React.FC = () => {
   const navigation = useIonRouter();
 
   const doLogin = () => {
-    navigation.push('/app','forward','replace');
+    navigation.push('/landong/app','forward','replace');
   }
 
   return (
